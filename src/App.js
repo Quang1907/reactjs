@@ -1,20 +1,64 @@
 import "./App.css";
 import { useState } from "react";
+import { Task } from "./Task";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const handleIncrease = () => {
-    setCount(count + 1);
+  const [todoList, setTodoList] = useState([]);
+  const [newTask, setNewTask] = useState("");
+
+  const handleNewTask = (event) => {
+    setNewTask(event.target.value);
   };
-  const handleDecrease = () => {
-    setCount(count - 1);
+
+  const handleAddTask = () => {
+    if (!newTask) return alert("vui long de trong");
+    const task = {
+      id: todoList.length === 0 ? 1 : todoList[todoList.length - 1].id + 1,
+      taskName: newTask,
+      completed: false,
+    };
+
+    const newTodoList = [...todoList, task];
+    setTodoList(newTodoList);
+    setNewTask("");
+  };
+
+  const handleDeleteTask = (id) => {
+    const newTodoList = todoList.filter((task) => task.id !== id);
+    setTodoList(newTodoList);
+  };
+
+  const handleCompletedTask = (id) => {
+    console.log(id);
+    setTodoList(
+      todoList.map((task) => {
+        if (task.id === id) {
+          return { ...task, completed: true };
+        }
+        return task;
+      })
+    );
   };
   return (
     <div className="App">
-      <button onClick={handleIncrease}>Increase</button>
-      <button onClick={handleDecrease}>Decrease</button>
-      <button onClick={() => setCount(0)}>set to zero</button>
-      {count}
+      <div className="addTask">
+        <input onChange={handleNewTask} value={newTask} />
+        <button onClick={handleAddTask}>Add task</button>
+      </div>
+      <div className="list">
+        {todoList.map((task, key) => {
+          return (
+            <Task
+              key={task.id}
+              id={task.id}
+              taskName={task.taskName}
+              handleDeleteTask={handleDeleteTask}
+              handleCompletedTask={handleCompletedTask}
+              completed={task.completed}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
