@@ -1,49 +1,20 @@
 import "./App.css";
-import { User } from "./User";
+// import { User } from "./User";
 
 function App() {
-  const names = ["Quang", "it"];
-
-  const users = [
-    {
-      name: "Quangit",
-      age: 19,
-    },
-    {
-      name: "Quang 1998",
-      age: 19,
-    },
-    {
-      name: "Quang it",
-      age: 20,
-    },
+  const planets = [
+    { name: "mars", isGasPlanet: false },
+    { name: "earth", isGasPlanet: true },
+    { name: "Jupiter", isGasPlanet: true },
+    { name: "Venus", isGasPlanet: false },
   ];
-
   return (
     <div className="App">
-      {names.map((name, key) => {
-        return <h1 key={key}>{name}</h1>;
-      })}
-      <div>
-        {users.map((user, item) => {
-          return <User name={user.name} age={user.age} />;
-          // return (
-          //   <h1 key={item}>
-          //     {user.name} - {user.age}
-          //   </h1>
-          // );
-        })}
-      </div>
+      {planets.map(
+        (planet, key) => planet.isGasPlanet && <h1 key={key}>{planet.name}</h1>
+      )}
     </div>
   );
 }
-
-// const User = (props) => {
-//   return (
-//     <div>
-//       {props.name} - {props.age}
-//     </div>
-//   );
-// };
 
 export default App;
