@@ -2,29 +2,19 @@ import "./App.css";
 import { useState } from "react";
 
 function App() {
-  const [inputValue, setInputValue] = useState("");
-  const [showText, setShowText] = useState(true);
-  const [textColor, setTextColor] = useState("green");
-
-  const handleChangeValue = (event) => {
-    setInputValue(event.target.value);
+  const [count, setCount] = useState(0);
+  const handleIncrease = () => {
+    setCount(count + 1);
   };
-
-  const handleClickButton = () => {
-    setShowText(!showText);
+  const handleDecrease = () => {
+    setCount(count - 1);
   };
   return (
     <div className="App">
-      <input type="text" value={inputValue} onChange={handleChangeValue} />
-      <button onClick={handleClickButton}>show/hide</button>
-      <button
-        onClick={() => {
-          setTextColor(textColor === "red" ? "green" : "red");
-        }}
-      >
-        change red color
-      </button>
-      {showText === true && <h1 style={{ color: textColor }}>{inputValue}</h1>}
+      <button onClick={handleIncrease}>Increase</button>
+      <button onClick={handleDecrease}>Decrease</button>
+      <button onClick={() => setCount(0)}>set to zero</button>
+      {count}
     </div>
   );
 }
